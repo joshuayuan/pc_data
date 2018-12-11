@@ -1,0 +1,3 @@
+<launch>
+  <node name="collector" pkg="pc_data" type="collector.py" />
+</launch>

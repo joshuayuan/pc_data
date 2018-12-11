@@ -6,6 +6,9 @@
   <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
     <arg name="rtabmap_args" value="--delete_db_on_start" />
   </include>
+  <node name="extract" pkg="image_view" type="extract_images" respawn="false" required="true" output="screen" cwd="ROS_HOME">
+    <remap from="image" to="/camera/rgb/image_color"/>
+  </node>
 
   <!-- <node name="collector" pkg="pc_data" type="collector.py"/> -->
 </launch>
