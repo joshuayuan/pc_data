@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 import rospy, cv2
+import numpy as np
+import tf.transformations as tr
 from pypcd import pypcd
 from std_msgs.msg import Header
 from sensor_msgs.msg import Image, PointCloud2
@@ -41,8 +43,12 @@ class CollectorNode:
             # clockwise is negative, and counterclockwise is positive.
             qz = data.pose.pose.orientation.z
             qw = data.pose.pose.orientation.w
-            f.write(str(qx) + "\n")
+            quat = data.pose.pose.orientation
+            quat_arr = np.array([quat.x, quat.y, quat.z, quat.w])
             print "(" + str(qx) + ", " + str(qy) + ", " + str(qz) + ", " + str(qw) + ")"
+            theta = tr.euler_from_quaternion(quat_arr, 'sxyz')[2]
+            f.write(str(theta) + "\n")
+            print "angle is: " + str(theta)
             f.close()
             self.bbb = True
 
